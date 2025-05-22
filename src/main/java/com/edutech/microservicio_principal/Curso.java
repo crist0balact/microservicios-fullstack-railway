@@ -1,6 +1,9 @@
 package com.edutech.microservicio_principal;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Curso {
@@ -8,17 +11,29 @@ public class Curso {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotNull
+    @Size(min = 3, max = 100)
+    @Column(nullable = false)
     private String nombre;
+
+    @NotNull
+    @Size(max = 255)
+    @Column(nullable = false)
     private String descripcion;
+
+    @Min(0)
+    @Column(nullable = false)
     private int valorCurso;
 
     public Curso() {
     }
 
-    public Curso(Long id, String nombre, String descripcion) {
+    public Curso(Long id, String nombre, String descripcion, int valorCurso) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
+        this.valorCurso = valorCurso;
     }
 
     public Long getId() {
@@ -59,7 +74,7 @@ public class Curso {
                "id=" + id +
                ", nombre='" + nombre + '\'' +
                ", descripcion='" + descripcion + '\'' +
-               ", valor='" + valorCurso + '\'' +
+               ", valor=" + valorCurso +
                '}';
     }
 }
