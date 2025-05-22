@@ -3,7 +3,7 @@ package com.edutech.microservicio_principal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
-@RestController
+@RestController 
 @RequestMapping("/api/cursos")
 public class CursoController {
 
