@@ -1,24 +1,22 @@
 package com.edutech.microservicio_principal;
-package com.edutech.microservice_principal;
 
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
-
 @RestController
 @RequestMapping("/api/cursos")
-public class CursoController { 
+public class CursoController {
 
     @Autowired
     private CursoRepository cursoRepository;
 
     @GetMapping
-    public List<Curso> getAllCursos() { 
+    public List<Curso> getAllCursos() {
         return cursoRepository.findAll();
     }
 
     @PostMapping
-    public Curso createCurso(@RequestBody Curso curso) { 
+    public Curso createCurso(@RequestBody Curso curso) {
         return cursoRepository.save(curso);
     }
 
