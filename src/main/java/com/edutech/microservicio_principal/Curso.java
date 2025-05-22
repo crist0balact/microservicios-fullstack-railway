@@ -10,11 +10,13 @@ public class Curso {
     private Long id;
     private String nombre;
     private String descripcion;
+    private int valorCurso;
 
     public Curso() {
     }
 
-    public Curso(String nombre, String descripcion) {
+    public Curso(Long id, String nombre, String descripcion) {
+        this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
     }
@@ -43,12 +45,21 @@ public class Curso {
         this.descripcion = descripcion;
     }
 
+    public int getValorCurso() {
+        return valorCurso;
+    }
+
+    public void setValorCurso(int valorCurso) {
+        this.valorCurso = valorCurso;
+    }
+
     @Override
     public String toString() {
         return "Curso{" +
                "id=" + id +
                ", nombre='" + nombre + '\'' +
                ", descripcion='" + descripcion + '\'' +
+               ", valor='" + valorCurso + '\'' +
                '}';
     }
 }
