@@ -14,12 +14,12 @@ public class Usuario {
     private Long id;
 
     @NotNull
-    @Size(min = 5, max = 30)
+    @Size(min = 3, max = 30)
     @Column(nullable = false)
     private String nombres;
 
     @NotNull
-    @Size(min = 5, max = 30)
+    @Size(min = 3, max = 30)
     @Column(nullable = false)
     private String apellidos;
 
@@ -29,12 +29,12 @@ public class Usuario {
     private String correo;
 
     @NotNull
-    @Size(min = 8)
+    @Size(min = 7)
     @Column(nullable = false)
     private String contraseña;
 
     @NotNull
-    @Size(min = 10, max = 50)
+    @Size(min = 5, max = 50)
     @Column(nullable = false)
     private String rol;
 
