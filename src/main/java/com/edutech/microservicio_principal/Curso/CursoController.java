@@ -32,6 +32,20 @@ public class CursoController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Curso> actualizarCurso(@PathVariable Long id, @Valid @RequestBody Curso cursoActualizado) {
+        return cursoService.obtenerPorId(id)
+                .map(cursoExistente -> {
+                    cursoExistente.setNombre(cursoActualizado.getNombre());
+                    cursoExistente.setDescripcion(cursoActualizado.getDescripcion());
+                    cursoExistente.setValorCurso(cursoActualizado.getValorCurso());
+
+                    Curso cursoGuardado = cursoService.guardarCurso(cursoExistente);
+                    return ResponseEntity.ok(cursoGuardado);
+                })
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> eliminarCurso(@PathVariable Long id) {
         return cursoService.eliminarCurso(id)
