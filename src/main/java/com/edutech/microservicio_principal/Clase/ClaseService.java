@@ -22,6 +22,10 @@ public class ClaseService {
     public List<Clase> obtenerTodas() {
         return claseRepository.findAll();
     }
+    
+    public List<Clase> obtenerClasesPorCurso(String nombreCurso) {
+    return claseRepository.findByCursoNombre(nombreCurso); // Consulta el repositorio para retornar una lista de objetos Clase
+}
 
     public Optional<Clase> obtenerPorId(Long id) {
         return claseRepository.findById(id);

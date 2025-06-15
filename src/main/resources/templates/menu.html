@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"> 
+<head>
+    <meta charset="UTF-8">
+    <title>Menú Principal</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+        .container { margin-top: 50px; }
+        .btn { background-color: #0078D4; color: white; padding: 10px 20px; font-size: 18px; text-decoration: none; border-radius: 5px; }
+        .btn:hover { background-color: #005ca9; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Bienvenido a Edutech Learning</h1>
+        <a class="btn" th:href="@{/vista-cursos}">Mostrar cursos disponibles</a>
+    </div>
+</body>
+</html>
