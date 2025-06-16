@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Bienvenida</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 100px;
+        }
+
+        .top-bar {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            text-align: right;
+        }
+
+        .btn-cerrar {
+            background-color: #0078D4;
+            color: white;
+            padding: 6px 12px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .btn-cerrar:hover {
+            background-color: #005ca9;
+        }
+
+        .btn-container {
+            margin-top: 40px;
+        }
+
+        .btn {
+            background-color: #0078D4;
+            color: white;
+            padding: 12px 25px;
+            margin: 10px;
+            border: none;
+            font-size: 16px;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+
+        .btn:hover {
+            background-color: #005ca9;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <a class="btn-cerrar" th:href="@{/menu}">Cerrar sesión</a>
+    </div>
+
+    <h1 th:text="'Bienvenido, ' + ${usuarioNombre}"></h1>
+
+    <div class="btn-container">
+        <a class="btn" th:href="@{/vista-cursos}">Mostrar cursos</a>
+        <a class="btn" th:href="@{/vista-horario}">Ver tus cursos</a>
+    </div>
+</body>
+</html>

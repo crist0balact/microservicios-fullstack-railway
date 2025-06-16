@@ -1,6 +1,9 @@
 package com.edutech.microservicio_principal.Curso;
 
 import jakarta.persistence.*;
+import com.edutech.microservicio_principal.Usuario.Usuario;
+import java.util.List;
+import java.util.ArrayList;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -26,6 +29,9 @@ public class Curso {
     @Min(0)
     @Column(nullable = false)
     private int valorCurso;
+
+    @ManyToMany(mappedBy = "cursosInscritos") // relacion para inscribir multiples cursos en un usuario
+        private List<Usuario> usuariosInscritos = new ArrayList<>();
 
     public Curso() {
     }

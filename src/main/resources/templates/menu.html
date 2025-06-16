@@ -1,19 +1,30 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org"> 
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Menú Principal</title>
+    <title>Inicio de Sesión</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
-        .container { margin-top: 50px; }
-        .btn { background-color: #0078D4; color: white; padding: 10px 20px; font-size: 18px; text-decoration: none; border-radius: 5px; }
+        body { font-family: Arial, sans-serif; text-align: center; padding: 50px; }
+        form { display: inline-block; text-align: left; }
+        input { display: block; width: 100%; padding: 8px; margin: 10px 0; }
+        .btn { background-color: #0078D4; color: white; padding: 10px 20px; border: none; cursor: pointer; }
         .btn:hover { background-color: #005ca9; }
+        .error { color: red; font-weight: bold; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Bienvenido a Edutech Learning</h1>
-        <a class="btn" th:href="@{/vista-cursos}">Mostrar cursos disponibles</a>
-    </div>
+    <h1>Bienvenido a Edutech Learning</h1>
+
+    <form th:action="@{/menu}" method="post">
+    <label for="correo">Correo electrónico:</label>
+    <input type="email" name="correo" id="correo" required>
+
+    <label for="contraseña">Contraseña:</label>
+    <input type="password" name="contraseña" id="contraseña" required>
+
+    <button type="submit" class="btn">Iniciar sesión</button>
+
+    <p class="error" th:if="${error}" th:text="${error}"></p>
+</form>
 </body>
 </html>

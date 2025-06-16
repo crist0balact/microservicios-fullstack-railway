@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Mis Cursos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #0078D4;
+        }
+
+        .curso-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px auto;
+            width: 60%;
+            text-align: left;
+            background-color: #f7f9fc;
+        }
+
+        .curso-card h2 {
+            margin: 0;
+            color: #333;
+        }
+
+        .curso-card p {
+            margin-top: 5px;
+            color: #666;
+        }
+
+        .btn-ver-clases {
+            display: inline-block;
+            margin-top: 10px;
+            background-color: #0078D4;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        .btn-ver-clases:hover {
+            background-color: #005ca9;
+        }
+
+        .btn-volver {
+            margin-top: 30px;
+            display: inline-block;
+            background-color: #555;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .btn-volver:hover {
+            background-color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 th:text="'Hola ' + ${usuarioNombre} + ', estos son tus cursos inscritos:'">Tus Cursos</h1>
+
+    <div th:if="${cursosInscritos.isEmpty()}">
+        <p>Aún no estás inscrito en ningún curso.</p>
+    </div>
+
+    <div th:each="curso : ${cursosInscritos}" class="curso-card">
+        <h2 th:text="${curso.nombre}">Nombre del Curso</h2>
+        <p th:text="${curso.descripcion}">Descripción del curso</p>
+        <a class="btn-ver-clases" th:href="@{'/vista-clases/' + ${curso.nombre}}">Ver Clases</a>
+    </div>
+
+    <a class="btn-volver" th:href="@{/bienvenida}">← Volver al inicio</a>
+
+</body>
+</html>

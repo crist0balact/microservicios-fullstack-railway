@@ -1,9 +1,12 @@
 package com.edutech.microservicio_principal.Usuario;
 
+import com.edutech.microservicio_principal.Curso.Curso;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "usuarios")
@@ -37,6 +40,15 @@ public class Usuario {
     @Size(min = 5, max = 50)
     @Column(nullable = false)
     private String rol;
+
+    // Lista de cursos en los que el usuario está inscrito
+    @ManyToMany
+    @JoinTable(
+        name = "usuarios_cursos_inscritos",
+        joinColumns = @JoinColumn(name = "usuario_id"),
+        inverseJoinColumns = @JoinColumn(name = "curso_id")
+    )
+private List<Curso> cursosInscritos = new ArrayList<>();
 
     public Usuario() {
     }
@@ -98,6 +110,14 @@ public class Usuario {
         this.rol = rol;
     }
 
+    public List<Curso> getCursosInscritos() {
+        return cursosInscritos;
+    }
+
+    public void setCursosInscritos(List<Curso> cursosInscritos) {
+        this.cursosInscritos = cursosInscritos;
+    }
+
     @Override
     public String toString() {
         return "Usuario{" +
@@ -107,6 +127,7 @@ public class Usuario {
                ", correo='" + correo + '\'' +
                ", contraseña='" + "********" + '\'' +
                ", rol='" + rol + '\'' +
+               ", cursosInscritos=" + cursosInscritos.size() +
                '}';
     }
 }
