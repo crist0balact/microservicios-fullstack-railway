@@ -15,14 +15,14 @@ class ClasedbInitializerTest {
 
     @Test
     void testCargaClasesCuandoNoHayDatos() {
-        // Simular repositorios
+        // Simula los repositorios necesarios
         ClaseRepository mockClaseRepo = mock(ClaseRepository.class);
         CursoRepository mockCursoRepo = mock(CursoRepository.class);
 
-        // Simula que no hay clases aún
+        // Configura el repositorio de clases para que actúe como si no hubiera datos
         when(mockClaseRepo.count()).thenReturn(0L);
 
-        // Simula cursos con nombres esperados por el switch
+        // Crea cursos de prueba con nombres que coinciden con las condiciones del initializer
         Curso cursoJava = new Curso();
         cursoJava.setNombre("Curso de Java");
 
@@ -32,30 +32,31 @@ class ClasedbInitializerTest {
         Curso cursoJapones = new Curso();
         cursoJapones.setNombre("Curso de Japonés");
 
+        // El repositorio de cursos devuelve la lista simulada
         when(mockCursoRepo.findAll()).thenReturn(List.of(cursoJava, cursoIngles, cursoJapones));
 
-        // Ejecutar el initializer
+        // Ejecuta el método run() del initializer
         ClasedbInitializer initializer = new ClasedbInitializer(mockClaseRepo, mockCursoRepo);
         initializer.run();
 
-        // Verifica que saveAll() fue invocado tres veces (una por cada curso)
+        // Verifica que se haya llamado saveAll() tres veces, una por cada curso encontrado
         verify(mockClaseRepo, times(3)).saveAll(any());
     }
 
     @Test
     void testNoHaceNadaSiYaHayDatos() {
-        // Repositorios simulados
+        // Se crean mocks de los repositorios
         ClaseRepository mockClaseRepo = mock(ClaseRepository.class);
         CursoRepository mockCursoRepo = mock(CursoRepository.class);
 
-        // Simula que ya hay registros
+        // Simula que ya existen 10 clases en la base de datos
         when(mockClaseRepo.count()).thenReturn(10L);
 
-        // Ejecutar el initializer
+        // Ejecuta el initializer
         ClasedbInitializer initializer = new ClasedbInitializer(mockClaseRepo, mockCursoRepo);
         initializer.run();
 
-        // Verifica que no se llamaron métodos porque ya había datos
+        // Verifica que no se llamó a findAll ni a saveAll porque ya había datos
         verify(mockCursoRepo, never()).findAll();
         verify(mockClaseRepo, never()).saveAll(any());
     }

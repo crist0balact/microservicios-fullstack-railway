@@ -10,32 +10,33 @@ class CursodbInitializerTest {
 
     @Test
     void testCargaCursosSiRepoVacio() {
-        // Simular repositorio
+        // Simular repositorio de Curso usando Mockito
         CursoRepository cursoRepository = mock(CursoRepository.class);
 
-        // Simula base de datos vacía
+        // Simular que el repositorio está vacío (sin cursos en BD)
         when(cursoRepository.count()).thenReturn(0L);
 
-        // Ejecutar initializer
+        // Crear instancia del inicializador con el mock
         CursodbInitializer initializer = new CursodbInitializer(cursoRepository);
-        initializer.run();
+        initializer.run(); // Ejecutar el método que debe poblar la base
 
-        // Verificar que saveAll se llamó una vez con una lista de cursos
+        // Verificar que saveAll() fue invocado una vez con cualquier lista de cursos
         verify(cursoRepository, times(1)).saveAll(any());
     }
 
     @Test
     void testNoHaceNadaSiYaHayCursos() {
+        // Crear mock del repositorio
         CursoRepository cursoRepository = mock(CursoRepository.class);
 
-        // Simula que ya hay cursos
+        // Simular que ya hay cursos guardados en la base
         when(cursoRepository.count()).thenReturn(3L);
 
-        // Ejecutar initializer
+        // Ejecutar el initializer
         CursodbInitializer initializer = new CursodbInitializer(cursoRepository);
         initializer.run();
 
-        // Verifica que NO se intentó guardar nada
+        // Verificar que saveAll() no fue llamado (ya había cursos)
         verify(cursoRepository, never()).saveAll(any());
     }
 }
