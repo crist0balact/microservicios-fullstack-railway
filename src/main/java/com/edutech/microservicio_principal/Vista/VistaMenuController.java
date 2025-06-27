@@ -1,6 +1,5 @@
 package com.edutech.microservicio_principal.Vista;
 
-
 import com.edutech.microservicio_principal.Clase.ClaseRepository;
 import com.edutech.microservicio_principal.Curso.Curso;
 import com.edutech.microservicio_principal.Curso.CursoRepository;
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-
 import java.util.Optional;
 
 @Controller
@@ -20,14 +18,18 @@ public class VistaMenuController {
 
     private final UsuarioRepository usuarioRepository;
     private final CursoRepository cursoRepository;
-    
 
     public VistaMenuController(UsuarioRepository usuarioRepository,
                                CursoRepository cursoRepository,
                                ClaseRepository claseRepository) {
         this.usuarioRepository = usuarioRepository;
         this.cursoRepository = cursoRepository;
-        
+    }
+
+    // 🔥 Nuevo mapping para responder en la raíz del dominio
+    @GetMapping("/")
+    public String redirigirAlMenu() {
+        return "redirect:/menu";
     }
 
     @GetMapping("/menu")
@@ -61,51 +63,47 @@ public class VistaMenuController {
     }
 
     @GetMapping("/vista-horario")
-public String mostrarHorario(@SessionAttribute("usuarioNombre") String usuarioNombre, Model model) {
-    Usuario usuario = usuarioRepository.findByNombres(usuarioNombre).orElse(null);
+    public String mostrarHorario(@SessionAttribute("usuarioNombre") String usuarioNombre, Model model) {
+        Usuario usuario = usuarioRepository.findByNombres(usuarioNombre).orElse(null);
 
-    if (usuario != null) {
-        model.addAttribute("cursosInscritos", usuario.getCursosInscritos());
+        if (usuario != null) {
+            model.addAttribute("cursosInscritos", usuario.getCursosInscritos());
+        }
+
+        return "vista-horario";
     }
-
-    return "vista-horario";
-}
-
-    
 
     @GetMapping("/inscribirse-id/{id}")
-        public String inscribirPorId(@PathVariable Long id,
-    @SessionAttribute("usuarioNombre") String usuarioNombre,
-            Model model) {
-    Usuario usuario = usuarioRepository.findByNombres(usuarioNombre).orElse(null);
-    Curso curso = cursoRepository.findById(id).orElse(null);
+    public String inscribirPorId(@PathVariable Long id,
+                                 @SessionAttribute("usuarioNombre") String usuarioNombre,
+                                 Model model) {
+        Usuario usuario = usuarioRepository.findByNombres(usuarioNombre).orElse(null);
+        Curso curso = cursoRepository.findById(id).orElse(null);
 
-    System.out.println("Inscribiendo por ID: " + id + " → " + (curso != null ? curso.getNombre() : "Curso no encontrado"));
+        System.out.println("Inscribiendo por ID: " + id + " → " + (curso != null ? curso.getNombre() : "Curso no encontrado"));
 
-    if (usuario != null && curso != null && !usuario.getCursosInscritos().contains(curso)) {
-        usuario.getCursosInscritos().add(curso);
-        usuarioRepository.save(usuario);
+        if (usuario != null && curso != null && !usuario.getCursosInscritos().contains(curso)) {
+            usuario.getCursosInscritos().add(curso);
+            usuarioRepository.save(usuario);
+        }
+
+        model.addAttribute("usuarioNombre", usuarioNombre);
+        return "redirect:/vista-horario";
     }
-
-    // Restaurar el atributo de sesión
-    model.addAttribute("usuarioNombre", usuarioNombre);
-
-    return "redirect:/vista-horario";
-}
 
     @GetMapping("/cancelar-inscripcion/{id}")
-        public String cancelarInscripcion(@PathVariable Long id,
-                                  @SessionAttribute("usuarioNombre") String usuarioNombre,
-                                  Model model) {
-    Usuario usuario = usuarioRepository.findByNombres(usuarioNombre).orElse(null);
-    Curso curso = cursoRepository.findById(id).orElse(null);
+    public String cancelarInscripcion(@PathVariable Long id,
+                                      @SessionAttribute("usuarioNombre") String usuarioNombre,
+                                      Model model) {
+        Usuario usuario = usuarioRepository.findByNombres(usuarioNombre).orElse(null);
+        Curso curso = cursoRepository.findById(id).orElse(null);
 
-    if (usuario != null && curso != null) {
-        usuario.getCursosInscritos().remove(curso);
-        usuarioRepository.save(usuario);
+        if (usuario != null && curso != null) {
+            usuario.getCursosInscritos().remove(curso);
+            usuarioRepository.save(usuario);
+        }
+
+        model.addAttribute("usuarioNombre", usuarioNombre);
+        return "redirect:/vista-horario";
     }
-
-    model.addAttribute("usuarioNombre", usuarioNombre); // Restaurar sesión por si acaso
-    return "redirect:/vista-horario";
-}
 }
